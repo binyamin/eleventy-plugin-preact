@@ -1,0 +1,35 @@
+{
+  "name": "@binyamin/eleventy-preact",
+  "version": "0.1.0",
+  "description": "An Eleventy plugin for rendering JSX/TSX as HTML, with Preact",
+  "main": ".eleventy.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/binyamin/eleventy-plugin-preact.git"
+  },
+  "keywords": [
+    "eleventy",
+    "eleventy-plugin",
+    "preact",
+    "jsx",
+    "tsx"
+  ],
+  "author": "Binyamin Aron Green (https://binyam.in/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/binyamin/eleventy-plugin-preact/issues"
+  },
+  "homepage": "https://github.com/binyamin/eleventy-plugin-preact#readme",
+  "dependencies": {
+    "esbuild": "^0.14.23",
+    "execa": "^6.1.0",
+    "preact": "^10.7.0",
+    "preact-render-to-string": "^5.1.20"
+  },
+  "peerDependencies": {
+    "@11ty/eleventy": ">=1.0.0"
+  }
+}

@@ -1,43 +1,43 @@
 const path = require("path");
-const esbuild = require('esbuild');
+const render = require("./lib/render.js");
 
-async function run(filepath, data={}) {
-    const {execa} = await import('execa');
+/**
+ * @param {import("@11ty/eleventy/src/UserConfig")} eleventyConfig
+ * @param {object} configGlobalOptions
+ * @param {boolean} [configGlobalOptions.doctype=false]
+ * @returns {ReturnType<import("@11ty/eleventy/src/defaultConfig")>}
+ */
+module.exports = function EleventyPreact(eleventyConfig, configGlobalOptions = {}) {
+    eleventyConfig.addTemplateFormats("jsx");
+    eleventyConfig.addTemplateFormats("tsx");
+    
+    const extConfig = {
+        outputFileExtension: "html",
+        read: false,
+        compile(inputContent, inputPath) {
+            return async function(data) {
+                const {
+                    collections,
+                    eleventyComputed,
+                    ...props
+                } = data;
 
-    const result = await esbuild.build({
-        entryPoints: ['utils/preact/shim.js'],
-        bundle: true,
-        format: "esm",
-        platform: "node",
-        external: ["preact", "preact-render-to-string"],
-        jsxFactory: 'h',
-        jsxFragment: 'Fragment',
-        treeShaking: true,
-        define: {
-            '__import_file': `'../../${path.normalize(filepath)}'`,
-            '__data': JSON.stringify(data)
-        },
-        write: false,
-    });
+                let htmlString = await render(path.resolve(inputPath), props);
+                
+                if(configGlobalOptions.doctype) {
+                    htmlString = '<!DOCTYPE html>' + htmlString;
+                }
 
-    const res2 = await execa('node', [
-        '--input-type=module',
-        '--eval',
-        result.outputFiles[0].text,
-    ]);
-    return res2.stdout;
-}
+                return htmlString;
+            }
+        }
+    }
 
+    eleventyConfig.addAsyncShortcode("renderFile", async function(filepath, props) {
+        const d = path.resolve(path.dirname(this.page.inputPath));
+        return await render(path.join(d, filepath), props);
+    })
 
-module.exports = function PluginPreact(eleventyConfig, opts={}) {
-    eleventyConfig.addWatchTarget("src/**/*.jsx");
-    eleventyConfig.addWatchTarget("src/**/*.tsx");
-
-    eleventyConfig.addAsyncShortcode('renderFile', async function(filepath, props) {
-        return await run(filepath, props);
-    });
-
-    eleventyConfig.addAsyncShortcode('component', async function(filename, props) {
-        return await run(`src/components/${filename}.jsx`, props);
-    });
+    eleventyConfig.addExtension("jsx", extConfig);
+    eleventyConfig.addExtension("tsx", extConfig);
 }
