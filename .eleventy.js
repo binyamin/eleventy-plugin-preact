@@ -10,7 +10,7 @@ const render = require("./lib/render.js");
 module.exports = function EleventyPreact(eleventyConfig, configGlobalOptions = {}) {
     eleventyConfig.addTemplateFormats("jsx");
     eleventyConfig.addTemplateFormats("tsx");
-    
+
     const extConfig = {
         outputFileExtension: "html",
         read: false,
@@ -19,10 +19,10 @@ module.exports = function EleventyPreact(eleventyConfig, configGlobalOptions = {
                 /*
                   We can't pass `collections` or `eleventyComputed`
                   as props.
-                  
+
                   TL;DR - With the way we render the JSX, we
                   get an error for those objects.
-                  
+
                   Why?
                   The way we render the JSX, we spawn a node.js
                   script, and send the props to that process
@@ -40,7 +40,7 @@ module.exports = function EleventyPreact(eleventyConfig, configGlobalOptions = {
                 } = data;
 
                 let htmlString = await render(path.resolve(inputPath), props);
-                
+
                 if(configGlobalOptions.doctype) {
                     htmlString = '<!DOCTYPE html>' + htmlString;
                 }
