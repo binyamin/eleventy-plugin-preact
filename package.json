@@ -17,6 +17,12 @@
     "jsx",
     "tsx"
   ],
+  "files": [
+    ".eleventy.js",
+    "lib/",
+    "README.md",
+    "LICENSE"
+  ],
   "author": "Binyamin Aron Green (https://binyam.in/)",
   "license": "MIT",
   "bugs": {
