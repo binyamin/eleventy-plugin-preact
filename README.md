@@ -9,8 +9,8 @@ const eleventyPreact = require("@binyamin/eleventy-preact");
 
 module.exports = function(eleventyConfig) {
     eleventyConfig.addPlugin(eleventyPreact, {
-        // Add a doctype to all standalone preact files. Default is `false`
-        doctype: true
+        // Add a doctype to all standalone preact files. Default is `true`
+        doctype: false
     });
 }
 ```

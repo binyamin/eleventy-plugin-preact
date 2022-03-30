@@ -2,12 +2,19 @@ const path = require("path");
 const render = require("./lib/render.js");
 
 /**
- * @param {import("@11ty/eleventy/src/UserConfig")} eleventyConfig
- * @param {object} configGlobalOptions
- * @param {boolean} [configGlobalOptions.doctype=false]
- * @returns {ReturnType<import("@11ty/eleventy/src/defaultConfig")>}
+ * @typedef {import("@11ty/eleventy/src/UserConfig")} EleventyConfig
  */
-module.exports = function EleventyPreact(eleventyConfig, configGlobalOptions = {}) {
+
+/**
+ * @param {EleventyConfig} eleventyConfig
+ * @param {object} [options]
+ * @param {boolean} [options.doctype=true] Whether to add a doctype for standalone preact files (default: `true`)
+ */
+function EleventyPreact(eleventyConfig, options = {}) {
+    options = Object.assign({
+        doctype: true
+    }, options);
+
     eleventyConfig.addTemplateFormats("jsx");
     eleventyConfig.addTemplateFormats("tsx");
 
@@ -41,7 +48,7 @@ module.exports = function EleventyPreact(eleventyConfig, configGlobalOptions = {
 
                 let htmlString = await render(path.resolve(inputPath), props);
 
-                if(configGlobalOptions.doctype) {
+                if(options.doctype) {
                     htmlString = '<!DOCTYPE html>' + htmlString;
                 }
 
@@ -58,3 +65,5 @@ module.exports = function EleventyPreact(eleventyConfig, configGlobalOptions = {
     eleventyConfig.addExtension("jsx", extConfig);
     eleventyConfig.addExtension("tsx", extConfig);
 }
+
+module.exports = EleventyPreact;

@@ -16,7 +16,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ## Unreleased
 ### Changed
 - Preact is now a peerDependency, and must be installed separately.
-
+- `options.doctype` now defaults to `true`
 
 ## [0.1.1] - 2022-03-29
 - Released on NPM
