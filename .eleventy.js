@@ -9,11 +9,16 @@ const render = require("./lib/render.js");
  * @param {EleventyConfig} eleventyConfig
  * @param {object} [options]
  * @param {boolean} [options.doctype=true] Whether to add a doctype for standalone preact files (default: `true`)
+ * @param {string|false} [options.shortcode="render_jsx"]  Unless set to `false`,
+ * add a shortcode with the given name. Default name is "render_jsx". The shortcode renders the given
+ * file, relative to the `includes` directory, with the given props.
  */
 function EleventyPreact(eleventyConfig, options = {}) {
     options = Object.assign({
-        doctype: true
+        doctype: true,
+        shortcode: "render_jsx"
     }, options);
+    if(options.shortcode === true) options.shortcode = "render_jsx";
 
     eleventyConfig.addTemplateFormats("jsx");
     eleventyConfig.addTemplateFormats("tsx");
@@ -57,10 +62,17 @@ function EleventyPreact(eleventyConfig, options = {}) {
         }
     }
 
-    eleventyConfig.addAsyncShortcode("renderFile", async function(filepath, props) {
-        const d = path.resolve(path.dirname(this.page.inputPath));
-        return await render(path.join(d, filepath), props);
-    })
+    if(options.shortcode !== false) {
+        eleventyConfig.addAsyncShortcode(options.shortcode, async function(filepath, props) {
+           const includes_dir = path.join(
+                this.ctx.eleventy.env.root,
+                eleventyConfig.dir.input,
+                eleventyConfig.dir.includes
+            );
+
+            return await render(path.join(includes_dir, filepath), props);
+        })
+    }
 
     eleventyConfig.addExtension("jsx", extConfig);
     eleventyConfig.addExtension("tsx", extConfig);

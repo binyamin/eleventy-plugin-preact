@@ -9,9 +9,21 @@ const eleventyPreact = require("@binyamin/eleventy-preact");
 
 module.exports = function(eleventyConfig) {
     eleventyConfig.addPlugin(eleventyPreact, {
-        // Add a doctype to all standalone preact files. Default is `true`
-        doctype: false
+        /* options */
     });
+}
+```
+
+
+## Customization
+- **doctype** (`boolean`) - Determines whether to add a doctype (`<!DOCTYPE HTML>`) before the rendered HTML. The doctype is never applied to JSX rendered via the shortcode.
+- **shortcode** (`string` or `false`) - This will register a shortcode with the given name, which renders a JSX file in-place. Setting it to `false` disables the shortcode. The shortcode takes two parameters. The first is a file path, relative to the `includes` directory. The second is an object, passed as props.
+
+These are the default options:
+```yaml
+{
+    doctype: true,
+    shortcode: "render_jsx"
 }
 ```
 

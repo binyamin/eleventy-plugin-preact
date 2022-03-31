@@ -14,9 +14,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
  -->
 
 ## Unreleased
+### Added
+- you can now disable or rename the shortcode
+
 ### Changed
 - Preact is now a peerDependency, and must be installed separately.
 - `options.doctype` now defaults to `true`
+- Renamed `renderFile` shortcode to `render_jsx`. The name conflicts with [Eleventy's official "render" plugin](https://www.11ty.dev/docs/plugins/render/).
+- Paths passed to the shortcode are now relative to the includes directory.
+
 
 ## [0.1.1] - 2022-03-29
 - Released on NPM
