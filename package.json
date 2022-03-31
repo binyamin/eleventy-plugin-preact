@@ -1,6 +1,6 @@
 {
   "name": "@binyamin/eleventy-preact",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "An Eleventy plugin for rendering JSX/TSX as HTML, with Preact",
   "main": ".eleventy.js",
   "scripts": {
