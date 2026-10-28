@@ -1,6 +1,9 @@
 # [@binyamin/eleventy-preact](https://www.npmjs.com/package/@binyamin/eleventy-preact)
 A personal [Eleventy](https://11ty.dev) plugin for rendering JSX/TSX as HTML, with [Preact](https://preactjs.com/).
 
+> [!CAUTION]
+> This package is **deprecated** (as of 10/28/2026).
+> Prefer the official solution from https://www.11ty.dev/docs/languages/jsx/
 
 ## Usage
 Add the plugin to your eleventy config, like so:
