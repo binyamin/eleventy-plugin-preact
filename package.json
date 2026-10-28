@@ -4,7 +4,7 @@
   "description": "An Eleventy plugin for rendering JSX/TSX as HTML, with Preact",
   "main": ".eleventy.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node --test"
   },
   "repository": {
     "type": "git",
